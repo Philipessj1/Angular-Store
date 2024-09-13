@@ -6,7 +6,17 @@ const app = express();
 
 const PORT = process.env.PORT || 8000;
 
-app.listen(PORT, () => {
+// DB Credentials
+const URI = process.env.DB_URI;
 
-    console.log(`App running on port: ${PORT}`); 
-})
+// Connecting to DB
+mongoose
+    .connect(URI)
+    .then(() => {
+
+        console.log('Connected to DB!');
+
+        app.listen(PORT, () => console.log(`App running on port: ${PORT}`));
+    })
+    .catch(err => console.log(err));
+
