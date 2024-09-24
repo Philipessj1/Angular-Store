@@ -4,6 +4,7 @@ import { ProductComponent } from '../product/product.component';
 import { Product, Products } from '../../../types';
 import { CommonModule } from '@angular/common';
 import { PaginatorModule } from 'primeng/paginator';
+import { environment } from '../../../environments/environment.development';
 
 @Component({
   selector: 'app-home',
@@ -14,6 +15,8 @@ import { PaginatorModule } from 'primeng/paginator';
 })
 export class HomeComponent {
   constructor(private productsService: ProductsService) {}
+
+  apiUrl: String = environment.API_URL;
 
   products: Product[] = [];
 
@@ -26,12 +29,50 @@ export class HomeComponent {
 
   fetchProducts(page:number, perPage:number) {
     this.productsService
-      .getProducts('http://localhost:3000/clothes', { page, perPage })
-      .subscribe((products: Products) => {
-        this.products = products.items;
-        this.totalRecords = products.total;
-        console.log(this.totalRecords)
+      .getProducts(`${this.apiUrl}/clothes`, { page, perPage })
+      .subscribe({
+        next: (data: Products) => {
+          this.products = data.items;
+          this.totalRecords = data.total;
+        },
+        error: error => console.log(error)
       })
+  }
+
+  editProduct(product: Product, id: number) {
+    this.productsService.editProduct(`${this.apiUrl}/clothes/${id}`, product).subscribe(
+      {
+        next: data => {
+          console.log(data)
+          this.fetchProducts(0,this.rows);
+        },
+        error: error => console.log(error)
+      }
+    )
+  }
+
+  addProduct(product: Product) {
+    this.productsService.addProduct(`${this.apiUrl}/clothes/`, product).subscribe(
+      {
+        next: data => {
+          console.log(data)
+          this.fetchProducts(0,this.rows);
+        },
+        error: error => console.log(error)
+      }
+    )
+  }
+
+  deleteProduct(id: number) {
+    this.productsService.deleteProduct(`${this.apiUrl}/clothes/${id}`).subscribe(
+      {
+        next: data => {
+          console.log(data)
+          this.fetchProducts(0,this.rows);
+        },
+        error: error => console.log(error)
+      }
+    )
   }
 
   ngOnInit() {

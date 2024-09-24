@@ -1,26 +1,41 @@
 .wrapper {
-    width: 250px;
+  width: 250px;
+  border-radius: 15px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
 
-    img {
-        aspect-ratio: 1;
-        object-fit: contain;
-        width: 100%;
-        border-radius: 15px;
-        background-color: grey;
-    }
+  .desc {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
 
-    .title {
-        font-weight: 700;
-        font-size: 1.5rem;
-    }
+    border-radius: 0px 0px 1rem 1rem;
+  }
 
-    .price-label {
-        font-weight: 300;
-        font-size: 1rem;
-    }
+  .price-rating {
+    display: flex;
+    flex-direction: column;
+  }
 
-    .price {
-        font-weight: 500;
-        font-size: 1rem;
-    }
+  img {
+    aspect-ratio: 1;
+    object-fit: contain;
+    width: 100%;
+    border-radius: 15px;
+    background-color: grey;
+  }
+
+  .title {
+    font-weight: 700;
+    font-size: 1.5rem;
+  }
+
+  .price-label {
+    font-weight: 300;
+    font-size: 1rem;
+  }
+
+  .price {
+    font-weight: 500;
+    font-size: 1rem;
+  }
 }

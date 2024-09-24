@@ -1,15 +1,21 @@
 <div class="column gap-1 wrapper">
     <img [src]="product.image" alt="Product Thumbnail">
-    <h2 class="title">{{ product.name }}</h2>
+   
 
-    <div class="gap-05 row">
-        <span class="price-label">Price:</span>
-        <span class="price">{{ product.price }}</span>
+    <div class="desc gap-1">
+        <h2 class="title">{{ product.name }}</h2>
+
+        <div class="price-rating gap-05">
+            <div class="gap-05 row">
+                <span class="price-label">Price:</span>
+                <span class="price">{{ product.price }}</span>
+            </div>
+        
+            <p-rating 
+                [(ngModel)]="product.rating" 
+                [cancel]="false"
+                [readonly]="true"
+            />
+        </div>
     </div>
-
-    <p-rating 
-        [(ngModel)]="product.rating" 
-        [cancel]="false"
-        [readonly]="true"
-    />
 </div>
