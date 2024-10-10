@@ -1,9 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { ProductsService } from '../../services/products.service';
 import { ProductComponent } from '../product/product.component';
 import { Product, Products } from '../../../types';
 import { CommonModule } from '@angular/common';
-import { PaginatorModule } from 'primeng/paginator';
+import { Paginator, PaginatorModule } from 'primeng/paginator';
 import { ButtonModule } from 'primeng/button';
 import { environment } from '../../../environments/environment.development';
 import { EditPopupComponent } from "../edit-popup/edit-popup.component";
@@ -19,6 +19,8 @@ export class HomeComponent {
   constructor(private productsService: ProductsService) {}
 
   apiUrl: String = environment.API_URL;
+
+  @ViewChild('paginator') paginator: Paginator | undefined;
 
   products: Product[] = [];
 
@@ -68,6 +70,10 @@ export class HomeComponent {
     this.fetchProducts(event.page, event.rows);
   }
 
+  resetPaginator() {
+    this.paginator?.changePage(0);
+  }
+
   /* GET Product */
   fetchProducts(page:number, perPage:number) {
     this.productsService
@@ -88,6 +94,7 @@ export class HomeComponent {
         next: data => {
           console.log(data)
           this.fetchProducts(0,this.rows);
+          this.resetPaginator();
         },
         error: error => console.log(error)
       }
@@ -101,6 +108,7 @@ export class HomeComponent {
         next: data => {
           console.log(data)
           this.fetchProducts(0,this.rows);
+          this.resetPaginator();
         },
         error: error => console.log(error)
       }
@@ -114,6 +122,7 @@ export class HomeComponent {
         next: data => {
           console.log(data)
           this.fetchProducts(0,this.rows);
+          this.resetPaginator();
         },
         error: error => console.log(error)
       }
