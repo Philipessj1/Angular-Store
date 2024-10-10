@@ -20,22 +20,28 @@
     aspect-ratio: 1;
     object-fit: contain;
     width: 100%;
-    border-radius: 15px;
+    border-radius: 15px 15px 0px 0px;
     background-color: grey;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 3px 16px;
   }
 
   .title {
     font-weight: 700;
-    font-size: 1.5rem;
+    font-size: 1.3rem;
   }
 
-  .price-label {
-    font-weight: 300;
-    font-size: 1rem;
-  }
+  .price-cont {
 
-  .price {
-    font-weight: 500;
-    font-size: 1rem;
+    align-items: center;
+    
+    .price-label {
+      font-weight: 300;
+      font-size: 1rem;
+    }
+  
+    .price {
+      font-weight: 500;
+      font-size: 1rem;
+    }
   }
 }
