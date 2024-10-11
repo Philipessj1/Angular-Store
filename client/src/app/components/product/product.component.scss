@@ -1,7 +1,9 @@
 .wrapper {
   width: 250px;
+  height: 470px;
   border-radius: 15px;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+  justify-content: space-between;
 
   .desc {
     padding: 1rem;
@@ -27,21 +29,25 @@
 
   .title {
     font-weight: 700;
-    font-size: 1.3rem;
+    font-size: 1.2rem;
   }
 
   .price-cont {
-
     align-items: center;
+    font-weight: 500;
     
     .price-label {
-      font-weight: 300;
       font-size: 1rem;
     }
   
-    .price {
-      font-weight: 500;
-      font-size: 1rem;
+    .price {      
+      font-size: 0.95rem;
     }
   }
+}
+
+.btn-cont {
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1.2rem;
 }

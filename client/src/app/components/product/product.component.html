@@ -1,43 +1,46 @@
-<div class="column gap-1 wrapper">
-    <img [src]="product.image" alt="Product Thumbnail">
-   
+<div class="column wrapper">
+  <img [src]="product.image" alt="Product Thumbnail" />
 
+  <div class="column wrapper-child">
     <div class="desc gap-1">
-        <h2 class="title">{{ product.name }}</h2>
+      <h2 class="title">{{ product.name }}</h2>
 
-        <div class="price-rating gap-05">
-            <div class="price-cont gap-05 row">
-                <span class="price-label">Price:</span>
-                <span class="price">{{ product.price }}</span>
-            </div>
-        
-            <p-rating 
-                [(ngModel)]="product.rating" 
-                [cancel]="false"
-                [readonly]="true"
-            />
+      <div class="price-rating gap-1">
+        <div class="price-cont gap-05 row">
+          <span class="price-label">Price:</span>
+          <span class="price">${{ product.price }}</span>
         </div>
+
+        <p-rating
+          [(ngModel)]="product.rating"
+          [cancel]="false"
+          [readonly]="true"
+        />
+      </div>
     </div>
 
-    <div class="row gap-05">
-        <button
-          type="button"
-          pButton
-          icon="pi pi-pencil"
-          (click)="editProduct()"
-          label="Edit"
-        ></button>
+    <div class="btn-cont row">
+      <button
+        type="button"
+        pButton
+        icon="pi pi-pencil"
+        (click)="editProduct()"
+        [text]="true"
+        [rounded]="true"
+      ></button>
 
-        <button
-          type="button"
-          pButton
-          icon="pi pi-trash"
-          (click)="confirmDelete()"
-          label="Delete"
-          class="p-button-danger"
-          #deleteButton
-        ></button>
+      <button
+        type="button"
+        pButton
+        icon="pi pi-trash"
+        (click)="confirmDelete()"
+        class="p-button-danger"
+        [text]="true"
+        [rounded]="true"
+        #deleteButton
+      ></button>
     </div>
+  </div>
 </div>
 
 <p-confirmPopup></p-confirmPopup>
