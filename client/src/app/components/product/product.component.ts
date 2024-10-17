@@ -1,15 +1,30 @@
-import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { Product } from '../../../types';
 import { RatingModule } from 'primeng/rating';
 import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmationService } from 'primeng/api';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
+import { PricePipe } from '../../pipes/price.pipe';
+import { TruncateNamePipe } from '../../pipes/truncate-name.pipe';
 
 @Component({
   selector: 'app-product',
   standalone: true,
-  imports: [RatingModule, FormsModule, ButtonModule, ConfirmPopupModule],
+  imports: [
+    RatingModule,
+    FormsModule,
+    ButtonModule,
+    ConfirmPopupModule,
+    PricePipe,
+    TruncateNamePipe,
+  ],
   providers: [ConfirmationService],
   templateUrl: './product.component.html',
   styleUrl: './product.component.scss',
@@ -33,8 +48,8 @@ export class ProductComponent {
       message: 'Are you sure that you want to delete this product?',
       accept: () => {
         this.deleteProduct();
-      }
-    })
+      },
+    });
   }
 
   deleteProduct() {
