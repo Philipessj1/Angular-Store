@@ -1,6 +1,6 @@
 <p-dialog [header]="header" [(visible)]="display" [modal]="true" [closable]="false">
 
-    <div class="column gap-1">
+    <div class="column gap-1 form-wrapper">
         <!-- Name -->
         <div class="row gap-05">
             <span class="price-label">Name:</span>
@@ -24,6 +24,7 @@
             [(ngModel)]="product.rating" 
             [cancel]="false"
             [readonly]="false"
+            class="rating"
         />
     </div>
 
