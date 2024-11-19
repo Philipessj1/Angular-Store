@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import conn from "./db/conn.js";
+import { router as routes } from "./routes/router.js";
 
 const app = express();
 
@@ -10,6 +11,9 @@ const PORT = process.env.PORT || 8000;
 app.use(cors());
 
 app.use(express.json());
+
+//Routes
+app.use('/api', routes);
 
 // DB connection and server start
 conn().then(() =>
