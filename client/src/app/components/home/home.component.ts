@@ -26,7 +26,6 @@ export class HomeComponent {
 
   /* ADD/EDIT Popup */
   selectedProduct: Product = {
-    id: 0,
     name: '',
     image: '',
     price: '',
@@ -46,8 +45,8 @@ export class HomeComponent {
   }
 
   toggleDeletePopup(product: Product) {
-    if (!product.id) return;
-    this.deleteProduct(product.id);
+    if (!product._id) return;
+    this.deleteProduct(product._id);
   }
   
   onConfirmAdd(product: Product) {
@@ -56,9 +55,9 @@ export class HomeComponent {
   }
 
   onConfirmEdit(product: Product) {
-    if (!this.selectedProduct.id) return;
+    if (!this.selectedProduct._id) return;
 
-    this.editProduct(product, this.selectedProduct.id);
+    this.editProduct(product, this.selectedProduct._id);
     this.displayAddProduct = false;
   }
 
@@ -77,11 +76,12 @@ export class HomeComponent {
   /* GET Product */
   fetchProducts(page:number, perPage:number) {
     this.productsService
-      .getProducts(`${this.apiUrl}/clothes`, { page, perPage })
+      .getProducts(`${this.apiUrl}/products`, { page, perPage })
       .subscribe({
         next: (data: Products) => {
           this.products = data.items;
           this.totalRecords = data.total;
+          console.log(data);
         },
         error: error => console.log(error)
       })
@@ -89,7 +89,7 @@ export class HomeComponent {
 
   /* CREATE Product */
   addProduct(product: Product) {
-    this.productsService.addProduct(`${this.apiUrl}/clothes/`, product).subscribe(
+    this.productsService.addProduct(`${this.apiUrl}/products/`, product).subscribe(
       {
         next: data => {
           console.log(data)
@@ -103,7 +103,7 @@ export class HomeComponent {
 
   /* PUT Product */
   editProduct(product: Product, id: number) {
-    this.productsService.editProduct(`${this.apiUrl}/clothes/${id}`, product).subscribe(
+    this.productsService.editProduct(`${this.apiUrl}/products/${id}`, product).subscribe(
       {
         next: data => {
           console.log(data)
@@ -117,7 +117,7 @@ export class HomeComponent {
 
   /* DELETE Product */
   deleteProduct(id: number) {
-    this.productsService.deleteProduct(`${this.apiUrl}/clothes/${id}`).subscribe(
+    this.productsService.deleteProduct(`${this.apiUrl}/products/${id}`).subscribe(
       {
         next: data => {
           console.log(data)
