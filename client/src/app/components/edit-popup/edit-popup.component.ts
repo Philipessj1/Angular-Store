@@ -58,10 +58,31 @@ export class EditPopupComponent {
   constructor(private formBuilder: FormBuilder) {
     this.productForm = this.formBuilder.group({
       name: ['', [Validators.required, this.specialCharValidator()]],
-      image: ['', []],
+      image: ['', [Validators.required]],
       price: ['', [Validators.required]],
       rating: [0],
     });
+  }
+
+  // Convert Image to Base64
+  onFileChange(event: Event) {
+    const input = event.target as HTMLInputElement;
+
+    if(input.files && input.files[0]) {
+      const file = input.files[0];
+      const reader = new FileReader();
+
+      reader.onload = () => {
+        const base64Image = reader.result as string;
+
+        this.product = {
+          ...this.productForm.value,
+          image: base64Image
+        }
+      }
+
+      reader.readAsDataURL(file);
+    }
   }
 
   // Update form values when input properties change
@@ -71,6 +92,7 @@ export class EditPopupComponent {
 
   // Handle confirm dialog
   onConfirm() {
+    this.productForm.patchValue(this.product);
     this.confirm.emit(this.productForm.value);
     this.display = false;
     this.displayChange.emit(this.display);

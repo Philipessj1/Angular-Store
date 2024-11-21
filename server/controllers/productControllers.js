@@ -1,15 +1,28 @@
 import { Product as ProductModel } from "../models/Product.js";
+import { v2 as cloudinary } from "cloudinary";
+
+// Cloudinary Configuration
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 const productController = {
   //CREATE
   create: async (req, res) => {
     try {
+      const { name, price, image, rating } = req.body;
+
+      //Upload img to cloudnary
+      const imgUrl = await cloudinary.uploader.upload(image);
+
       //Product Object
       const product = {
-        name: req.body.name,
-        price: req.body.price,
-        image: req.body.image,
-        rating: req.body.rating,
+        name,
+        price,
+        image: imgUrl.url,
+        rating,
       };
 
       //Post product on DB
@@ -97,12 +110,17 @@ const productController = {
       //get id from req.params
       const id = req.params.id;
 
+      const { name, price, image, rating } = req.body;
+
+      //Upload img to cloudnary
+      const imgUrl = await cloudinary.uploader.upload(image);
+
       //Product Object
       const product = {
-        name: req.body.name,
-        price: req.body.price,
-        image: req.body.image,
-        rating: req.body.rating,
+        name,
+        price,
+        image: imgUrl.url,
+        rating,
       };
 
       //Update the selected product on DB

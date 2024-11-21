@@ -20,7 +20,7 @@
     <!-- Image -->
     <div class="row gap-05">
       <span class="price-label">Image:</span>
-      <input type="text" formControlName="image" />
+      <input class="file-upload" type="file" (change)="onFileChange($event)" />
     </div>
 
     <!-- Rating -->

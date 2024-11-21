@@ -81,7 +81,6 @@ export class HomeComponent {
         next: (data: Products) => {
           this.products = data.items;
           this.totalRecords = data.total;
-          console.log(data);
         },
         error: error => console.log(error)
       })
