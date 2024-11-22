@@ -68,18 +68,18 @@ export class EditPopupComponent {
   onFileChange(event: Event) {
     const input = event.target as HTMLInputElement;
 
-    if(input.files && input.files[0]) {
+    if (input.files && input.files[0]) {
       const file = input.files[0];
       const reader = new FileReader();
 
       reader.onload = () => {
         const base64Image = reader.result as string;
 
-        this.product = {
+        this.productForm.patchValue({
           ...this.productForm.value,
-          image: base64Image
-        }
-      }
+          image: base64Image,
+        });
+      };
 
       reader.readAsDataURL(file);
     }
@@ -92,7 +92,6 @@ export class EditPopupComponent {
 
   // Handle confirm dialog
   onConfirm() {
-    this.productForm.patchValue(this.product);
     this.confirm.emit(this.productForm.value);
     this.display = false;
     this.displayChange.emit(this.display);

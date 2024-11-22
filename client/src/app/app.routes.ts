@@ -11,4 +11,9 @@ export const routes: Routes = [
     loadChildren: () =>
       import('./modules/about-us/about-us.module').then((m) => m.AboutUsModule),
   },
+  {
+    path: '**',
+    redirectTo: '',
+    pathMatch: 'full'
+  }
 ];
