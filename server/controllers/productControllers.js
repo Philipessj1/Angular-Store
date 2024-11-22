@@ -113,13 +113,21 @@ const productController = {
       const { name, price, image, rating } = req.body;
 
       //Upload img to cloudnary
-      const imgUrl = await cloudinary.uploader.upload(image);
+      const productImage = await ProductModel.findById(id);
+
+      let imgUrl;
+
+      if (productImage.image !== image) {
+        imgUrl = await cloudinary.uploader.upload(image).url;
+      } else {
+        imgUrl = image;
+      }
 
       //Product Object
       const product = {
         name,
         price,
-        image: imgUrl.url,
+        image: imgUrl,
         rating,
       };
 
