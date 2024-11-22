@@ -4,6 +4,12 @@
     border-bottom: 1px solid var(--border-color);
 
     padding:  2rem;
+
+    img {
+        @media screen and (max-width: 769px) {
+            height: 27px;
+        }
+    }
 }
 
 .logo {
