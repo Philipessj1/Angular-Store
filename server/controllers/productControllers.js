@@ -15,13 +15,18 @@ const productController = {
       const { name, price, image, rating } = req.body;
 
       //Upload img to cloudnary
-      const imgUrl = await cloudinary.uploader.upload(image);
+      const cloudRes = await cloudinary.uploader.upload(image);
+
+      const img = {
+        id: cloudRes.public_id,
+        url: cloudRes.url,
+      };
 
       //Product Object
       const product = {
         name,
         price,
-        image: imgUrl.url,
+        image: img,
         rating,
       };
 
@@ -48,7 +53,13 @@ const productController = {
       const products = await ProductModel.find();
 
       //slice products to the amount requested
-      const response = products.slice(start, end);
+      const slicedProducts = products.slice(start, end);
+
+      // Map over the sliced products to transform the data and returns only the img
+      const response = slicedProducts.map((data) => ({
+        ...data._doc,
+        image: data._doc.image.url,
+      }));
 
       //return products
       res.json({
@@ -77,11 +88,17 @@ const productController = {
         return;
       }
 
-      res.json(product);
+      const response = {
+        ...product._doc,
+        image: product._doc.image.url
+      }
+
+      res.json(response);
     } catch (error) {
       console.log(error);
     }
   },
+  //DELETE
   delete: async (req, res) => {
     try {
       //get id from req.params
@@ -95,6 +112,9 @@ const productController = {
         res.status(404).json({ msg: "Product not Found" });
         return;
       }
+
+      // Delete img asset on cloudinary
+      cloudinary.uploader.destroy(deletedProduct.image.id);
 
       //return the deleted product with a successfull message
       res
@@ -115,35 +135,41 @@ const productController = {
       //Upload img to cloudnary
       const productImage = await ProductModel.findById(id);
 
-      let imgUrl;
+      //check if products exists
+      if (!productImage) {
+        res.status(404).json({ msg: "Product not Found" });
+        return;
+      }
+
+      let img;
 
       if (productImage.image !== image) {
-        imgUrl = await cloudinary.uploader.upload(image).url;
+        img = await cloudinary.uploader.upload(image);
+
+        img = {
+          id: img.public_id,
+          url: img.url,
+        };
       } else {
-        imgUrl = image;
+        img = image;
       }
 
       //Product Object
       const product = {
         name,
         price,
-        image: imgUrl,
+        image: img,
         rating,
       };
 
       //Update the selected product on DB
       const updatedProduct = await ProductModel.findByIdAndUpdate(id, product);
 
-      //check if products exists
-      if (!updatedProduct) {
-        res.status(404).json({ msg: "Product not Found" });
-        return;
-      }
-
       //return the updated product with a successfull message
-      res
-        .status(200)
-        .json({ updatedProduct, msg: "Product updated successfully" });
+      res.status(200).json({
+        updatedProduct,
+        msg: "Product updated successfully",
+      });
     } catch (error) {
       console.log(error);
     }
